@@ -37,6 +37,14 @@ int main() {
                 printf("---INSERTE LISTA PACIENTES---\n");
                 break;
             
+            case 4:
+                printf("---INSERTE SIGUIENTE PACIENTE---\n");
+                break;
+            
+            case 5:
+                printf("---INSERTE MOSTRAR LISTA---\n");
+                break;
+            
             case 6:
                 puts("Saliendo del sistema de gestion hospitalaria...\n");
                 break;
