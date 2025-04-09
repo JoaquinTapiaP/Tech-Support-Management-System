@@ -85,7 +85,7 @@ void AddPacient(List* lista) {
     getchar();
 
     printf("Describe the Problem:\n");
-    scanf("%s", nuevo->desc);
+    scanf("%[^\n]s", nuevo->desc);
     nuevo->prioridad = Low;
 
     pushBack(lista, nuevo);
@@ -227,6 +227,11 @@ int main() {
     } while (option != 6);
 
     printf("Thank you for using HMS, see you later!\n");
+    
+    /*
+    gcc  tarea1.c list.c -Wno-unused-result -o Tarea-1-JoaquinTapiaP 
+    ./Tarea-1-JoaquinTapiaP
+    */
 
     return 0;
 }
