@@ -70,7 +70,8 @@ void AddPacient(List* lista) {
     if (nuevo == NULL) {
         printf("Error al asignar memoria.\n");
         return;
-    }
+    } 
+
     printf("Insert Pacient ID:\n");
 
     char aux[MAX];
@@ -81,6 +82,7 @@ void AddPacient(List* lista) {
         printf("Invalid Value, returning to main menu...\n");
         return;
     }
+
     nuevo->ID = atoi(aux);
     getchar();
 
@@ -93,46 +95,49 @@ void AddPacient(List* lista) {
     printf("Pacient has been added to the list correctly.\n");
 }
 
+void eliminarPacientePorID(List* lista, int ID) {
+    DatosPaciente* paciente = firstList(lista);
+    DatosPaciente* anterior = NULL;
+    
+    while (paciente != NULL) {
+        if (paciente->ID == ID) {
+            if (anterior == NULL) {
+                // Eliminar el primer nodo
+                popFront(lista);
+            } else {
+                // Eliminar un nodo intermedio
+                popCurrent(lista);
+            }
+            break;
+        }
+        anterior = paciente;
+        paciente = nextList(lista);
+    }
+}
+
+
 void AddPriority(List* LOW, List* MID, List* HIGH) {
     int IDSearch;
     printf("Enter the patient's ID to update priority:\n");
     scanf("%d", &IDSearch);
 
-    // Buscar en todas las listas
+    // Buscar en la lista LOW por defecto
     DatosPaciente* paciente = SearchID(LOW, IDSearch);
-    List* listaOriginal = LOW;
-    
-    if (paciente == NULL) {
-        paciente = SearchID(MID, IDSearch);
-        listaOriginal = MID;
-    }
-    
-    if (paciente == NULL) {
-        paciente = SearchID(HIGH, IDSearch);
-        listaOriginal = HIGH;
-    }
 
-    if (paciente == NULL) {
+    if ((paciente == NULL)) {
         limpiarPantalla();
         printf("The ID has not been found, returning to main menu...\n");
         return;
     }
 
     printf("The patient with ID '%d' has been found.\n", IDSearch);
-    printf("Please insert new priority (High, Mid or Low):\n");
-    
+    printf("Please insert new priority (High = 1, Mid = 2 or Low = 3):\n");
+
     int prioridad;
     scanf("%d", &prioridad);
 
-    // Primero eliminamos al paciente de su lista original
-    DatosPaciente* current = firstList(listaOriginal);
-    while (current != NULL) {
-        if (current->ID == IDSearch) {
-            popCurrent(listaOriginal);
-            break;
-        }
-        current = nextList(listaOriginal);
-    }
+    // Eliminar al paciente de la lista original
+    
 
     // Luego lo insertamos en la nueva lista de prioridad
     switch (prioridad) {
@@ -150,9 +155,10 @@ void AddPriority(List* LOW, List* MID, List* HIGH) {
             break;
         default:
             printf("Invalid priority. Patient will remain in current list.\n");
-            pushCurrent(listaOriginal, paciente); // Lo devolvemos a su lista original
+            pushBack(LOW, paciente); // Lo devolvemos a su lista original si la prioridad es inválida
             break;
     }
+    eliminarPacientePorID(LOW, IDSearch);
 
     limpiarPantalla();
     printf("Priority has been changed correctly.\n");
@@ -198,8 +204,11 @@ int main() {
             case 3:
                 //printf("---PRINT LISTA PACIENTES---\n");
                 printf("Showing waiting list...\n");
+                printf("\nHigh Priority:\n");
                 ShowList(PacientesHIGH);
+                printf("\nMid Priority:\n");
                 ShowList(PacientesMID);
+                printf("\nLow Priority:\n");
                 ShowList(PacientesLOW);
                 if (option != 6) {
                     getchar();
