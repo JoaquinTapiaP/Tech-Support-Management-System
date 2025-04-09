@@ -155,10 +155,11 @@ void AddPriority(List* LOW, List* MID, List* HIGH) {
             break;
         default:
             printf("Invalid priority. Patient will remain in current list.\n");
-            pushBack(LOW, paciente); // Lo devolvemos a su lista original si la prioridad es inválida
-            break;
+            pushCurrent(LOW, paciente); // Lo devolvemos a su lista original si la prioridad es inválida
+            return;
     }
     eliminarPacientePorID(LOW, IDSearch);
+    
 
     limpiarPantalla();
     printf("Priority has been changed correctly.\n");
