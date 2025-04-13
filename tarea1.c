@@ -72,7 +72,7 @@ void mostrarMenuPrincipal() {
     printf("6) Exit\n\n");
 }
 
-void AddUser(List* lista) {
+void AddUser(List* LOW, List* MID, List* HIGH) {
     //define nuevo usuario
     DatosUsuario *nuevo = (DatosUsuario *)malloc(sizeof(DatosUsuario));
     if (nuevo == NULL) {
@@ -97,9 +97,20 @@ void AddUser(List* lista) {
     nuevo->ID = atoi(aux);
     getchar();
 
-    DatosUsuario *verificar = SearchID(lista, nuevo->ID);
+    
+    DatosUsuario *verificar = SearchID(LOW, nuevo->ID);
+
+    if (verificar == NULL) {
+        verificar = SearchID(MID, nuevo->ID);
+    }
+
+    if (verificar == NULL) {
+        verificar = SearchID(HIGH, nuevo->ID);
+    }
+    
     if (verificar != NULL) {
-        printf("This ID is already in use, please start again.");
+        limpiarPantalla();
+        printf("This ID is already in use, please start again.\n");
         free(nuevo);
         return;
     }
@@ -126,8 +137,8 @@ void AddUser(List* lista) {
         return;
     }
 
-    //si todo está correcto, manda el nuevo usuario al final de la lista y limpia la pantalla
-    pushBack(lista, nuevo);
+    //si todo está correcto, manda el nuevo usuario al final de la lista LOW y limpia la pantalla
+    pushBack(LOW, nuevo);
     limpiarPantalla();
     printf("User has been added to the list correctly.\n");
 }
@@ -334,7 +345,7 @@ int main() {
             case 1:
                 //ejecuta la funcion para añadir un Usuario
                 //printf("---INSERTA NUEVO USUARIO---\n");
-                AddUser(UsuariosLOW);
+                AddUser(UsuariosLOW,UsuariosMID, UsuariosHIGH);
                 break;
             case 2:
                 //ejecuta la funcion para cambiar la prioridad de un Usuario
