@@ -73,43 +73,43 @@ El sistema registra a un paciente con una ID, con una prioridad inicial "Bajo" y
 
 Tras una evaluación inicial, el médico determina que el estado del paciente requiere atención prioritaria.
 
-´´´
+```
 Opción seleccionada: 2) Asignar nueva prioridad a paciente
 Ingrese el ID del paciente: 6
 Seleccione el nuevo nivel de prioridad (Alto = 1, Medio = 2, Bajo = 3): 1
-´´´
+```
 
 El sistema cambiara la prioridad del paciente a alto, y lo movera a la lista de alta prioridad.
 
 **Paso 3: Mostrar la lista de espera**
 El usuario desea ver la lista de pacientes del dia.
 
-´´´
+```
 Opción Seleccionada: 3) Mostrar lista de espera
-´´´
+```
 
 Mostrara la lista de espera, desde el primer paciente en la lista de pruioriad alta, hasta el ultimo paciente en la lista de prioridad baja.
 
 **Paso 4: Mostrar la lista de espera**
 El primer paciente es llamado para ser atendido.
 
-´´´
+```
 Opción Seleccionada: 4) Procesar siguiente paciente
-´´´
+```
 El sistema muestra la informacion del paciente, y lo elimina de la lista de espera.
 
 **Paso 5: Buscar por un paciente**
 El usuario desea buscar la informacion de un paciente en especifico
-´´´
+```
 Opción Seleccionada: 5) Buscar un paciente
 Ingrese el ID del paciente: 6
-´´´
+```
 
 El sistema muestra la informacion del paciente.
 
 **Paso 6: Buscar por un paciente**
 Al final del dia, el usuario desea terminar el programa y vaciar toda la lista de espera
-´´´
+```
 Opción Seleccionada: 6) Abandonar programa
-´´´
+```
 El programa se termina y elimina la informacion restante.
