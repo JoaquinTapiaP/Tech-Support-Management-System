@@ -23,9 +23,9 @@ Este sistema ha sido desarrollado en lenguaje C y puede ejecutarse fácilmente u
     - Inicia Visual Studio Code.
     - Selecciona `Archivo > Abrir carpeta...` y elige la carpeta donde descomprimiste el proyecto.
 3. **Compila el código**
-    - Abre el archivo principal (por ejemplo, `main.c`).
+    - Abre el archivo principal `tarea1.c`.
     - Abre la terminal integrada (`Terminal > Nueva terminal`).
-    - En la terminal Git Bash, compila el programa con el siguiente comando (ajusta el nombre si el archivo principal tiene otro nombre): 
+    - En la terminal Git Bash, compila el programa con el siguiente comando: 
     ```
     gcc  tarea1.c list.c -Wno-unused-result -o Tarea-1-JoaquinTapiaP 
     ```
@@ -67,7 +67,7 @@ Ingrese la descripcion del problema del paciente: Equince de muñeca
 Ingrese hora de llegada: 12:34
 ```
 
-El sistema registra a Ana Martínez con una prioridad inicial "Bajo" y guarda la hora actual de registro. La prioridad inicial puede ser ajustada más tarde basada en una evaluación médica más detallada.
+El sistema registra a un paciente con una ID, con una prioridad inicial "Bajo" y guarda la hora actual de registro. La prioridad inicial puede ser ajustada más adelante.
 
 **Paso 2: Reasignar Prioridad a un Paciente**
 
