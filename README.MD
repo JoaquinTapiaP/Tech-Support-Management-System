@@ -69,7 +69,7 @@ Ingrese la descripcion del problema del usuario: Pantalla Rota
 Ingrese hora de llegada: 12:34
 ```
 
-El sistema registra a un usuario con una ID, con una prioridad inicial "Bajo" y guarda la hora actual de registro. La prioridad inicial puede ser ajustada más adelante.
+El sistema registra a un usuario con una ID, con una prioridad inicial "Bajo" y guarda la hora actual de registro en formato 24 horas (ejemplo: 12:34, 15:30, 23:32) La prioridad inicial puede ser ajustada más adelante.
 
 **Paso 2: Reasignar Prioridad a un Usuario**
 
