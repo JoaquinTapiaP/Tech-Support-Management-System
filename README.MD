@@ -1,7 +1,8 @@
+### Hospital Management System (HMS)
+
 
 ## Descripción
 Este programa permite a los usuarios gestionar los pacientes de un hospital.
-Se llama Hospital Management System (HMS).
 Los usuarios pueden registrar nuevos pacientes, reasignar prioridades, ver la lista de espera, procesar el siguiente paciente y buscar y mostrar la informacion de un paciente.
 Esta herramiente esta hecha con el proposito de ayudar con el orden y organizacion de los pacientes, asegurando que aquellos en situaciones peligrosas sean los primeros en ser atendidos.
 
@@ -43,6 +44,7 @@ Este sistema ha sido desarrollado en lenguaje C y puede ejecutarse fácilmente u
 - Modificar la prioridad de los pacientes.
 - Ver la lista de espera de pacientes, ordenada por prioridad y hora de registro.
 - Atender al siguiente paciente, respetando el orden de prioridad (de alta a baja).
+- Buscar un paciente según su ID.
 
 ### Problemas conocidos:
 
