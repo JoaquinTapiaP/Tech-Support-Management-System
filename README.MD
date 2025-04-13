@@ -1,10 +1,10 @@
-### Hospital Management System (HMS)
+## Tech Support Management System (TSMS)
 
 
 ## Descripción
-Este programa permite a los usuarios gestionar los pacientes de un hospital.
-Los usuarios pueden registrar nuevos pacientes, reasignar prioridades, ver la lista de espera, procesar el siguiente paciente y buscar y mostrar la informacion de un paciente.
-Esta herramiente esta hecha con el proposito de ayudar con el orden y organizacion de los pacientes, asegurando que aquellos en situaciones peligrosas sean los primeros en ser atendidos.
+Este programa permite a los usuarios gestionar los tickets de ayuda de soporte tecnico de una empresa.
+Los usuarios pueden registrar nuevos tickets, reasignar prioridades, ver la lista de espera, procesar el siguiente tickets y buscar y mostrar la informacion de un ticket.
+Esta herramiente esta hecha con el proposito de ayudar con el orden y organizacion de los tickets, asegurando que aquellos que necesiten mas ayuda sean los primeros en ser atendidos.
 
 
 ## Cómo compilar y ejecutar
@@ -40,77 +40,77 @@ Este sistema ha sido desarrollado en lenguaje C y puede ejecutarse fácilmente u
 
 ### Funcionando correctamente:
 
-- Registrar pacientes con su ID, descripcion, hora y una prioridad inicial en orden de llegada.
-- Modificar la prioridad de los pacientes.
-- Ver la lista de espera de pacientes, ordenada por prioridad y hora de registro.
-- Atender al siguiente paciente, respetando el orden de prioridad (de alta a baja).
-- Buscar un paciente según su ID.
+- Registrar tickets con su ID, descripcion, hora y una prioridad inicial en orden de llegada.
+- Modificar la prioridad de los tickets.
+- Ver la lista de espera de tickets, ordenada por prioridad y hora de registro.
+- Atender al siguiente usuario, respetando el orden de prioridad (de alta a baja).
+- Buscar un usuario según su ID.
 
 ### Problemas conocidos:
 
-- Una vez la prioridad de un paciente en la lista de prioridad baja es cambiada, no se puede cambiar al estar en otra lista de prioridad
+- Una vez la prioridad de un ticket en la lista de prioridad baja es cambiada, no se puede cambiar al estar en otra lista de prioridad
 
 ### A mejorar:
 
-- Permitir la edición de la descripcion de los pacientes.
+- Permitir la edición de la descripcion de los tickets.
 - Permitir el cambio de prioridades cuando no se encuentran en prioridad baja.
 
 
 ## Ejemplo de uso
 
-**Paso 1: Registrar un Nuevo Paciente**
+**Paso 1: Registrar un Nuevo Ticket**
 
-Se comienza registrando un nuevo paciente que acaba de llegar al hospital.
+Se comienza registrando un nuevo ticket para la persona que acaba de llegar al servicio tecnica.
 
 ```
-Opción seleccionada: 1) Registrar paciente
-Ingrese el ID del paciente: 6
-Ingrese la descripcion del problema del paciente: Equince de muñeca
+Opción seleccionada: 1) Registrar ticket
+Ingrese el ID del usuario: 6
+Ingrese la descripcion del problema del usuario: Pantalla Rota
 Ingrese hora de llegada: 12:34
 ```
 
-El sistema registra a un paciente con una ID, con una prioridad inicial "Bajo" y guarda la hora actual de registro. La prioridad inicial puede ser ajustada más adelante.
+El sistema registra a un usuario con una ID, con una prioridad inicial "Bajo" y guarda la hora actual de registro. La prioridad inicial puede ser ajustada más adelante.
 
-**Paso 2: Reasignar Prioridad a un Paciente**
+**Paso 2: Reasignar Prioridad a un Usuario**
 
-Tras una evaluación inicial, el médico determina que el estado del paciente requiere atención prioritaria.
+Tras una evaluación inicial, el tecnico determina que el usuario requiere atención prioritaria.
 
 ```
-Opción seleccionada: 2) Asignar nueva prioridad a paciente
-Ingrese el ID del paciente: 6
+Opción seleccionada: 2) Asignar nueva prioridad a usuario
+Ingrese el ID del usuario: 6
 Seleccione el nuevo nivel de prioridad (Alto = 1, Medio = 2, Bajo = 3): 1
 ```
 
-El sistema cambiara la prioridad del paciente a alto, y lo movera a la lista de alta prioridad.
+El sistema cambiara la prioridad del usuario a alto, y lo movera a la lista de alta prioridad.
 
 **Paso 3: Mostrar la lista de espera**
-El usuario desea ver la lista de pacientes del dia.
+El usuario desea ver la lista de usuarios del dia.
 
 ```
 Opción Seleccionada: 3) Mostrar lista de espera
 ```
 
-Mostrara la lista de espera, desde el primer paciente en la lista de pruioriad alta, hasta el ultimo paciente en la lista de prioridad baja.
+Mostrara la lista de espera, desde el primer usuario en la lista de pruioriad alta, hasta el ultimo usuario en la lista de prioridad baja.
 
 **Paso 4: Mostrar la lista de espera**
-El primer paciente es llamado para ser atendido.
+El primer usuario es llamado para ser atendido.
 
 ```
-Opción Seleccionada: 4) Procesar siguiente paciente
+Opción Seleccionada: 4) Procesar siguiente usuario
 ```
-El sistema muestra la informacion del paciente, y lo elimina de la lista de espera.
+El sistema muestra la informacion del usuario, y lo elimina de la lista de espera.
 
-**Paso 5: Buscar por un paciente**
-El usuario desea buscar la informacion de un paciente en especifico
+**Paso 5: Buscar por un usuario**
+El usuario desea buscar la informacion de un usuario en especifico
 ```
-Opción Seleccionada: 5) Buscar un paciente
-Ingrese el ID del paciente: 6
+Opción Seleccionada: 5) Buscar un usuario
+Ingrese el ID del usuario: 6
 ```
 
-El sistema muestra la informacion del paciente.
+El sistema muestra la informacion del usuario.
 
-**Paso 6: Buscar por un paciente**
-Al final del dia, el usuario desea terminar el programa y vaciar toda la lista de espera
+**Paso 6: Buscar por un usuario**
+Al final del dia, el técnico desea terminar el programa y vaciar toda la lista de espera
 ```
 Opción Seleccionada: 6) Abandonar programa
 ```

@@ -19,7 +19,7 @@ typedef struct {
     char desc[MAX];
     int prioridad;
     horario tiempo;
-} DatosPaciente;
+} DatosUsuario;
 
 int esNumerico(const char *str) {
     if (str == NULL || *str == '\0') {
@@ -43,16 +43,16 @@ void limpiarPantalla() {
     #endif
 }
 
-DatosPaciente* SearchID(List* lista, int IDSearch) {
+DatosUsuario* SearchID(List* lista, int IDSearch) {
     if (lista == NULL || firstList(lista) == NULL) return NULL; //Si la lista no existe, retorna NULL
     
-    DatosPaciente* patient = firstList(lista); //obtiene el primer paciente de la lista
-    while (patient != NULL) { 
-        //mientras el paciente no sea NULL, buscara por el ID, y pasa al siguiente si no lo es
-        if (patient->ID == IDSearch) {
-            return patient;
+    DatosUsuario* User = firstList(lista); //obtiene el primer Usuario de la lista
+    while (User != NULL) { 
+        //mientras el Usuario no sea NULL, buscara por el ID, y pasa al siguiente si no lo es
+        if (User->ID == IDSearch) {
+            return User;
         }
-        patient = nextList(lista);
+        User = nextList(lista);
     }
     //en caso de no encontrarlo, retorna NULL
     return NULL;
@@ -61,26 +61,26 @@ DatosPaciente* SearchID(List* lista, int IDSearch) {
 void mostrarMenuPrincipal() {
     //Muestra el menu principal del programa y sus opciones
     printf("========================================\n");
-    printf("     Hospital Management System\n");
+    printf("     Tech Support Management System\n");
     printf("========================================\n");
   
-    printf("1) Register pacient\n");
-    printf("2) Assign priority to patient\n");
+    printf("1) Register user\n");
+    printf("2) Assign priority to user\n");
     printf("3) Show waiting list\n");
-    printf("4) Attent next patient\n");
-    printf("5) Search for Patient\n");
+    printf("4) Attent next user\n");
+    printf("5) Search for user\n");
     printf("6) Exit\n\n");
 }
 
-void AddPacient(List* lista) {
-    //define nuevo paciente
-    DatosPaciente *nuevo = (DatosPaciente *)malloc(sizeof(DatosPaciente));
+void AddUser(List* lista) {
+    //define nuevo usuario
+    DatosUsuario *nuevo = (DatosUsuario *)malloc(sizeof(DatosUsuario));
     if (nuevo == NULL) {
         printf("Error al asignar memoria.\n");
         return;
     } 
 
-    printf("Insert Pacient ID:\n");
+    printf("Insert User ID:\n");
 
     char aux[MAX];
     scanf("%s", aux);
@@ -97,6 +97,13 @@ void AddPacient(List* lista) {
     nuevo->ID = atoi(aux);
     getchar();
 
+    DatosUsuario *verificar = SearchID(lista, nuevo->ID);
+    if (verificar != NULL) {
+        printf("This ID is already in use, please start again.");
+        free(nuevo);
+        return;
+    }
+
     //Lee la cadena de string para la descripcion del problema
     printf("Describe the Problem:\n");
     scanf("%[^\n]s", nuevo->desc);
@@ -108,32 +115,34 @@ void AddPacient(List* lista) {
     Si la hora es menor que 0 o mayor de 23 lo invalida
     Si los minutos son menores que 0 o mayores a 59 lo invalida
     */
+    
     printf("Insert current time:\n");
     printf("Format must be in 24h and added as 'hh:mm'\n");
     if (scanf("%d:%d", &nuevo->tiempo.hora, &nuevo->tiempo.min) != 2 || nuevo->tiempo.hora < 0 
     || nuevo->tiempo.hora > 23 || nuevo->tiempo.min < 0 || nuevo->tiempo.min > 59) {
+        limpiarPantalla();
         printf("Invalid time format, returning to main menu...\n");
         free(nuevo);
         return;
     }
 
-    //si todo está correcto, manda el nuevo paciente al final de la lista y limpia la pantalla
+    //si todo está correcto, manda el nuevo usuario al final de la lista y limpia la pantalla
     pushBack(lista, nuevo);
     limpiarPantalla();
-    printf("Pacient has been added to the list correctly.\n");
+    printf("User has been added to the list correctly.\n");
 }
 
-void eliminarPacientePorID(List* lista, int ID) {
-    DatosPaciente* paciente = firstList(lista);
-    DatosPaciente* anterior = NULL;
-    //Obtiene el primer paciente de la lista
+void eliminarUsuarioPorID(List* lista, int ID) {
+    DatosUsuario* Usuario = firstList(lista);
+    DatosUsuario* anterior = NULL;
+    //Obtiene el primer Usuario de la lista
     //justifica el anterior de la lista como NULL de momento
 
-    //Busca el ID del paciente por cada paciente de la lista, está ya verificado que el valor si existe
+    //Busca el ID del Usuario por cada Usuario de la lista, está ya verificado que el valor si existe
     //al encoontrarlo, lo elimina de la lista, popfront si llega a ser el primero y popCurrent si no llega a hacerlo
-    //el paciente anterior ayuda a indicar si es o no el primero, ya que si no se encuentra en la primera iteracion, se justifica como el paciente actual, y continua
-    while (paciente != NULL) {
-        if (paciente->ID == ID) {
+    //el Usuario anterior ayuda a indicar si es o no el primero, ya que si no se encuentra en la primera iteracion, se justifica como el Usuario actual, y continua
+    while (Usuario != NULL) {
+        if (Usuario->ID == ID) {
             if (anterior == NULL) {
                 // Eliminar el primer nodo
                 popFront(lista);
@@ -143,30 +152,30 @@ void eliminarPacientePorID(List* lista, int ID) {
             }
             break;
         }
-        anterior = paciente;
-        paciente = nextList(lista);
+        anterior = Usuario;
+        Usuario = nextList(lista);
     }
 }
 
 void AddPriority(List* LOW, List* MID, List* HIGH) {
     int IDSearch;
-    printf("Enter the patient's ID to update priority:\n");
+    printf("Enter the User's ID to update priority:\n");
     scanf("%d", &IDSearch);
-    // Obtiene el ID del paciente que se quiere cambiar
+    // Obtiene el ID del Usuario que se quiere cambiar
 
     // Buscar en la lista LOW, ya que todos se inserta ahí por defecto
-    DatosPaciente* paciente = SearchID(LOW, IDSearch);
+    DatosUsuario* Usuario = SearchID(LOW, IDSearch);
 
-    //Si el paciente no existe, indica que no existe y vuelve al menu
-    if ((paciente == NULL)) {
+    //Si el Usuario no existe, indica que no existe y vuelve al menu
+    if ((Usuario == NULL)) {
         limpiarPantalla();
         printf("The Value inserted is invalid, returning to main menu...\n");
         return;
     }
 
-    //Avisa que encontró al paciente y pide que se indique la prioridad en numero
+    //Avisa que encontró al Usuario y pide que se indique la prioridad en numero
     // 1 si es alta, 2 si es media o 3 si es baja
-    printf("The patient with ID '%d' has been found.\n", IDSearch);
+    printf("The User with ID '%d' has been found.\n", IDSearch);
     printf("Please insert new priority (High = 1, Mid = 2 or Low = 3):\n");
 
     char prioridad[MAX];
@@ -176,7 +185,7 @@ void AddPriority(List* LOW, List* MID, List* HIGH) {
     
     if (!esNumerico(prioridad)) {
         limpiarPantalla();
-        printf("Invalid priority. Patient will remain in current list.\n");
+        printf("Invalid priority. User will remain in current list.\n");
         //Avisa del error y no hace nada
         return;
     }
@@ -193,15 +202,15 @@ void AddPriority(List* LOW, List* MID, List* HIGH) {
         Si llega a ser LOW (La misma prioridad anterior, avisa que no se cambio y termina)*/
         
         case High:
-            paciente->prioridad = High;
-            pushBack(HIGH, paciente);
-            eliminarPacientePorID(LOW, IDSearch);
+            Usuario->prioridad = High;
+            pushBack(HIGH, Usuario);
+            eliminarUsuarioPorID(LOW, IDSearch);
             printf("Priority has been changed correctly.\n");
             break;
         case Mid:
-            paciente->prioridad = Mid;
-            pushBack(MID, paciente);
-            eliminarPacientePorID(LOW, IDSearch);
+            Usuario->prioridad = Mid;
+            pushBack(MID, Usuario);
+            eliminarUsuarioPorID(LOW, IDSearch);
             printf("Priority has been changed correctly.\n");
             break;
         case Low:
@@ -209,101 +218,101 @@ void AddPriority(List* LOW, List* MID, List* HIGH) {
             //no hace nada ya que ya está en la lista baja
             break;
         default:
-            printf("Invalid priority. Patient will remain in current list.\n");
+            printf("Invalid priority. Usuario will remain in current list.\n");
             //Avisa del error y no hace nada
             return;
     }
     return;
 }
 
-void showPatient(DatosPaciente *patient) {
-    //Muestra todos los datos del paciente
+void showUser(DatosUsuario *User) {
+    //Muestra todos los datos del Usuario
 
-    printf("Patient ID: %d\n", patient->ID);
-    printf("Patient DESC: %s\n", patient->desc);
-    printf("Patient PRIORITY: ");
-    if (patient->prioridad == 1) 
+    printf("User ID: %d\n", User->ID);
+    printf("User DESC: %s\n", User->desc);
+    printf("User PRIORITY: ");
+    if (User->prioridad == 1) 
         printf("HIGH\n");
-    else if (patient->prioridad == 2)
+    else if (User->prioridad == 2)
         printf("MID\n");
     else 
         printf("LOW\n");
-    printf("Patient TIME: %02d:%02d\n", patient->tiempo.hora, patient->tiempo.min);
+    printf("User TIME: %02d:%02d\n", User->tiempo.hora, User->tiempo.min);
     printf("-------------------------\n");
 }
 
 void ShowList(List* list) {
     if (list == NULL || firstList(list) == NULL) return; //si la lista esta vacia o no existe, termina
 
-    //hace un paciente auxiiliar para obtener sus datos individuales y usa la funcion ShowPatient para mostrar sus datos
-    DatosPaciente* patient = firstList(list);
+    //hace un Usuario auxiiliar para obtener sus datos individuales y usa la funcion showUser para mostrar sus datos
+    DatosUsuario* User = firstList(list);
     printf("-------------------------\n");
-    //Una vez obtiene si el paciete existe, imprime todo y pasa al siguiente, se detiene una vez el paciente sea NULL
-    while (patient != NULL) {
-        showPatient(patient);
-        patient = nextList(list);
+    //Una vez obtiene si el paciete existe, imprime todo y pasa al siguiente, se detiene una vez el Usuario sea NULL
+    while (User != NULL) {
+        showUser(User);
+        User = nextList(list);
     }
     return;
 }
 
-void ProcessPatient(List* LOW, List* MID, List* HIGH) {
+void ProcessUser(List* LOW, List* MID, List* HIGH) {
     /*Marca una lista auxiliar 
-    Verifica por cada lista si tiene pacientes o no, si no los tiene, procesa la siguiente
+    Verifica por cada lista si tiene Usuario o no, si no los tiene, procesa la siguiente
     Si la ultima fila (LOW) esta vacia, avisa que no queda nadie por procesar y te devuelve al menu prinicpal
     */
     List* prior = HIGH;
-    DatosPaciente *patient = firstList(prior);
-    if (patient == NULL) {
-        patient = firstList(MID);
+    DatosUsuario *User = firstList(prior);
+    if (User == NULL) {
+        User = firstList(MID);
         prior = MID;
     }
 
-    if (patient == NULL) {
-        patient = firstList(LOW);
+    if (User == NULL) {
+        User = firstList(LOW);
         prior = LOW;
     }
     limpiarPantalla();
-    if (patient == NULL) {
+    if (User == NULL) {
         printf("There is no one left in the list, returning to main menu...\n");
         return;
     }
     
-    //Procesa la lista, usa ShowPatient para mostrar todos los datos y lo elimina de su lista correspondiente
-    printf("Processing next Patient on the list...\n");
+    //Procesa la lista, usa showUser para mostrar todos los datos y lo elimina de su lista correspondiente
+    printf("Processing next User on the list...\n");
     printf("-------------------------\n");
-    showPatient(patient);
+    showUser(User);
     popCurrent(prior);
 }
 
-void SearchPatient(List* LOW, List* MID, List* HIGH) {
+void SearchUser(List* LOW, List* MID, List* HIGH) {
     /*Una vez toda prioridad cambiada y/o procesada, pasa por todas las listas y busca con la funcion SearchID
-    Si es que el paciente esta en la lista, si no esta en ninguna, indica que no existe*/
+    Si es que el Usuario esta en la lista, si no esta en ninguna, indica que no existe*/
     List* prior = HIGH;
     int IDReq;
     printf("Insert the ID you are searching for\n");
     scanf("%d", &IDReq);
     
 
-    DatosPaciente *patient = SearchID(prior, IDReq);
-    if (patient == NULL) {
-        patient = firstList(MID);
+    DatosUsuario *User = SearchID(prior, IDReq);
+    if (User == NULL) {
+        User = firstList(MID);
         prior = MID;
     }
-    patient = SearchID(prior, IDReq);
-    if (patient == NULL) {
-        patient = firstList(LOW);
+    User = SearchID(prior, IDReq);
+    if (User == NULL) {
+        User = firstList(LOW);
         prior = LOW;
     }
-    patient = SearchID(prior, IDReq);
+    User = SearchID(prior, IDReq);
     limpiarPantalla();
-    if (patient == NULL) {
-        printf("The Patient with id %d does not exist, returning to main menu...\n", IDReq);
+    if (User == NULL) {
+        printf("The User with id %d does not exist, returning to main menu...\n", IDReq);
         return;
     }
 
-    //Si encuentra el paciente, usa la funcion ShowPatient para mostrar sus datos
+    //Si encuentra el Usuario, usa la funcion showUser para mostrar sus datos
     printf("-------------------------\n");
-    showPatient(patient);
+    showUser(User);
 }
 
 int main() {
@@ -311,9 +320,9 @@ int main() {
     int option;
 
     //Crea 3 listas, una para cada prioridad, alta, media y baja
-    List* PacientesHIGH = createList();
-    List* PacientesMID = createList();
-    List* PacientesLOW = createList();
+    List* UsuariosHIGH = createList();
+    List* UsuariosMID = createList();
+    List* UsuariosLOW = createList();
     
     do {
         //obtiene el valor de la opcion y muestra el menu principal
@@ -323,43 +332,43 @@ int main() {
         
         switch (option) {
             case 1:
-                //ejecuta la funcion para añadir un paciente
-                //printf("---INSERTA NUEVO PACIENTE---\n");
-                AddPacient(PacientesLOW);
+                //ejecuta la funcion para añadir un Usuario
+                //printf("---INSERTA NUEVO USUARIO---\n");
+                AddUser(UsuariosLOW);
                 break;
             case 2:
-                //ejecuta la funcion para cambiar la prioridad de un paciente
+                //ejecuta la funcion para cambiar la prioridad de un Usuario
                 //printf("---REEMPLAZA NUEVA PRIORIDAD---\n");
-                AddPriority(PacientesLOW, PacientesMID, PacientesHIGH);
+                AddPriority(UsuariosLOW, UsuariosMID, UsuariosHIGH);
                 break;
             case 3:
-                //ejecuta la funcion showList para mostrar todos los pacientes de las 3 listas
-                //printf("---PRINT LISTA PACIENTES---\n");
+                //ejecuta la funcion showList para mostrar todos los Usuarios de las 3 listas
+                //printf("---PRINT LISTA USUARIOs---\n");
                 printf("Showing waiting list...\n");
                 printf("\nHigh Priority:\n");
-                ShowList(PacientesHIGH);
+                ShowList(UsuariosHIGH);
                 printf("\nMid Priority:\n");
-                ShowList(PacientesMID);
+                ShowList(UsuariosMID);
                 printf("\nLow Priority:\n");
-                ShowList(PacientesLOW);
+                ShowList(UsuariosLOW);
                 if (option != 6) {
                     getchar();
                     limpiarPantalla();
                     }
                 break;
             case 4:
-                //ejecuta la funcion para procesar el siguiente paciente segun su prioridad y momento inscrito
-                //printf("---PROCESE SIGUIENTE PACIENTE---\n");
-                ProcessPatient(PacientesLOW, PacientesMID, PacientesHIGH);
+                //ejecuta la funcion para procesar el siguiente Usuario segun su prioridad y momento inscrito
+                //printf("---PROCESE SIGUIENTE USUARIOS---\n");
+                ProcessUser(UsuariosLOW, UsuariosMID, UsuariosHIGH);
                 break;
             case 5:
-                //ejecuta la funcion de buscar el paciente en las listas
-                //printf("---PRINT MOSTRAR TODA LISTA POR PRIORIDAD---\n");
-                SearchPatient(PacientesLOW, PacientesMID, PacientesHIGH);
+                //ejecuta la funcion de buscar el Usuario en las listas
+                //printf("---PRINT USUARIO EN ESPECIFICO---\n");
+                SearchUser(UsuariosLOW, UsuariosMID, UsuariosHIGH);
                 break;
             case 6:
                 //termina el programa
-                printf("Closing Hospital Management System...\n");
+                printf("Closing Tech Support Management System...\n");
                 break;
             default:
                 printf("Invalid option, please try again\n");
@@ -367,15 +376,16 @@ int main() {
 
         // Después de cada acción volver al menú principal
         if (option != 6) {
+            printf("Press any key to return to the main menu.\n");
             getchar();
         }
 
     } while (option != 6);
 
-    printf("Thank you for using HMS, see you later!\n");
-    free(PacientesHIGH);
-    free(PacientesMID);
-    free(PacientesLOW);
+    printf("Thank you for using TSMS, see you later!\n");
+    free(UsuariosHIGH);
+    free(UsuariosMID);
+    free(UsuariosLOW);
 
     /*
     gcc  tarea1.c list.c -Wno-unused-result -o Tarea-1-JoaquinTapiaP 
