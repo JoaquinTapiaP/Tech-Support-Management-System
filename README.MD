@@ -28,12 +28,12 @@ Este sistema ha sido desarrollado en lenguaje C y puede ejecutarse fácilmente u
     - Abre la terminal integrada (`Terminal > Nueva terminal`).
     - En la terminal Git Bash, compila el programa con el siguiente comando: 
     ```
-    gcc  tarea1.c list.c -Wno-unused-result -o Tarea-1-JoaquinTapiaP 
+    gcc  TSMS.c list.c -Wno-unused-result -o Tech-Support-Management-System
     ```
 4. **Ejecuta el programa**
     - Una vez compilado, puedes ejecutar la aplicación con:
     ```
-    ./Tarea-1-JoaquinTapiaP
+    ./Tech-Support-Management-System
     ```
 
 ### Funcionalidades
